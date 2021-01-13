@@ -35,15 +35,18 @@ export default () => {
     }
 
     return (
-        <form onSubmit={signupNewUser}>
-            <input type="text" value={name} placeholder="Your name"
-                onChange={e => setName({ name: e.target.value })} required />
-            <input type="email" value={email} placeholder="Your email"
-                onChange={e => setName({ email: e.target.value })} required />
-            <input type="password" value={password} placeholder="Choose a safe password"
-                onChange={e => setName({ password: e.target.value })} required />
-            <input type="submit" />
-        </form>
+        <>
+            <h1>Sign up</h1>
+            <form onSubmit={signupNewUser}>
+                <input type="text" value={name} placeholder="Your name"
+                    onChange={e => setName({ name: e.target.value })} required />
+                <input type="email" value={email} placeholder="Your email"
+                    onChange={e => setName({ email: e.target.value })} required />
+                <input type="password" value={password} placeholder="Choose a safe password"
+                    onChange={e => setName({ password: e.target.value })} required />
+                <input type="submit" />
+            </form>
+        </>
     )
 
 }
