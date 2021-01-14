@@ -3,6 +3,7 @@ import './../styles/App.css';
 import LinkList from './LinkList';
 import Notification from './Notification';
 import SignUp from './SignUp';
+import Login from './Login';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Notification />
       </>} />
       <Route exact path="/signup" component={SignUp} />
+      <Route exact path="/login" component={Login} />
     </Switch>
   );
 }

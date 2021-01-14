@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
 import { Redirect } from 'react-router-dom'
 
-const SIGN_UP = gql`
-  mutation Signup($email: String!, $password: String!, $name: String!) {
-    signup(email: $email, password: $password, name: $name){
+const LOGIN = gql`
+  mutation Signup($email: String!, $password: String!) {
+    login(email: $email, password: $password){
         token
         user{
             name
@@ -16,9 +16,9 @@ const SIGN_UP = gql`
 `;
 
 export default () => {
-    const [details, setDetails] = useState({ email: '', password: '', name: '' });
-    const [signup, { loading: mutationLoading, error: mutationError, data },] = useMutation(SIGN_UP);
-    const { email, password, name } = details;
+    const [details, setDetails] = useState({ email: '', password: '' });
+    const [login, { loading: mutationLoading, error: mutationError, data }] = useMutation(LOGIN, { errorPolicy: 'all' });
+    const { email, password } = details;
 
     const setName = (updatedProp) => {
         const newState = { ...details, ...updatedProp };
@@ -29,20 +29,18 @@ export default () => {
     if (mutationError) return <p>Error :(</p>;
     if (data) return <Redirect to="/" />;
 
-    const signupNewUser = (e) => {
+    const loginUser = (e) => {
         e.preventDefault();
-        signup({ variables: { email, password, name } });
+        login({ variables: { email, password } });
     }
 
     return (
         <>
-            <h1>Sign up</h1>
-            <form onSubmit={signupNewUser}>
-                <input type="text" value={name} placeholder="Your name"
-                    onChange={e => setName({ name: e.target.value })} required />
+            <h1>Login</h1>
+            <form onSubmit={loginUser}>
                 <input type="email" value={email} placeholder="Your email"
                     onChange={e => setName({ email: e.target.value })} required />
-                <input type="password" value={password} placeholder="Choose a safe password"
+                <input type="password" value={password} placeholder="Your password"
                     onChange={e => setName({ password: e.target.value })} required />
                 <input type="submit" />
             </form>
