@@ -27,7 +27,10 @@ export default () => {
 
     if (mutationLoading) return <p>Loading...</p>;
     if (mutationError) return <p>Error :(</p>;
-    if (data) return <Redirect to="/" />;
+    if (data) {
+        localStorage.setItem("AUTH_TOKEN", data.token);
+        return <Redirect to="/" />;
+    }
 
     const loginUser = (e) => {
         e.preventDefault();
