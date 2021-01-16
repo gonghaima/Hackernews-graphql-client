@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 import { useQuery, gql } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import './styles/index.css';
 import App from './components/App';
 
@@ -17,21 +18,30 @@ import {
   InMemoryCache
 } from '@apollo/client';
 
+const token = localStorage.getItem('AUTH_TOKEN') || "random token hardcoded";
+const customFetch = (uri, options) => {
+  console.log(`token: ${token}`)
+  options.headers.authorization = token;
+  return fetch(uri, options);
+};
 
 
 const wsLink = new WebSocketLink({
   uri: `ws://localhost:4000/graphql`,
+  fetch: customFetch,
   options: {
-    reconnect: true
+    reconnect: true,
+    connectionParams: {
+      authorization: token
+    },
   }
 });
 
 
-
-
 // 2
 const httpLink = createHttpLink({
-  uri: 'http://localhost:4000'
+  uri: 'http://localhost:4000',
+  fetch: customFetch
 });
 
 
@@ -46,6 +56,7 @@ const link = split(
   wsLink,
   httpLink
 );
+
 
 // 3
 const client = new ApolloClient({
