@@ -28,7 +28,8 @@ export default () => {
     if (mutationLoading) return <p>Loading...</p>;
     if (mutationError) return <p>Error :(</p>;
     if (data) {
-        localStorage.setItem("AUTH_TOKEN", data.token);
+        console.log('setting up localstorage...');
+        localStorage.setItem("AUTH_TOKEN", data.signup.token);
         return <Redirect to="/" />
     };
 
