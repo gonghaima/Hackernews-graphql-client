@@ -21,7 +21,7 @@ import {
 const token = localStorage.getItem('AUTH_TOKEN') || "random token hardcoded";
 const customFetch = (uri, options) => {
   console.log(`token: ${token}`)
-  options.headers.authorization = token;
+  options.headers.authorization = localStorage.getItem('AUTH_TOKEN') ;
   return fetch(uri, options);
 };
 
@@ -32,7 +32,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authorization: token
+      authorization: localStorage.getItem('AUTH_TOKEN') 
     },
   }
 });
